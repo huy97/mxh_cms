@@ -3,8 +3,8 @@ import services from "services";
 
 export const login = async (username, password) => {
     return await services.post(LOGIN_URL, {
-        username,
-        password
+        username: username,
+        pwd: password
     });
 }
 export const register = async (fullName, username, password, confirmPassword) => {
@@ -80,7 +80,8 @@ export const createRole = async (description, permissionCodes) => {
 }
 
 export const updateRole = async (roleId, description, permissionCodes) => {
-    return await services.put(UPDATE_DELETE_ROLE_URL.replace(':id', roleId), {
+    return await services.put(UPDATE_DELETE_ROLE_URL, {
+        id: roleId,
         description,
         permissionCodes
     });

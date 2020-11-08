@@ -13,6 +13,7 @@ class App extends React.Component{
         const token = getUserToken();
         const {auth: {isLoggedIn}} = this.props;
         if(token && !isLoggedIn){
+            
             this.props.dispatch(restoreToken());
         }else {
             this.props.dispatch({type: LOGIN_FAILURE});

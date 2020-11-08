@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { Table, Button, Popconfirm, Tooltip } from "antd";
+import { Table, Button, Popconfirm } from "antd";
 import PropTypes from "prop-types";
 import { FiTrash, FiEdit3 } from "react-icons/fi";
-import { getCDN } from "utils";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import moment from "moment";
-import Ability from "containers/Ability";
 import { PERMISSION_CODE } from "constants/global";
+import Ability from "containers/Ability";
 
 export default class ListSong extends Component {
     static propTypes = {
@@ -43,70 +41,36 @@ export default class ListSong extends Component {
             {
                 title: "ID",
                 dataIndex: "shortCode",
-                width: 120,
-                fixed: "left",
+                width: 40,
+                render: (text, record) => record.versionCode,
             },
             {
-                title: "Tên thể loại",
+                title: "Phiên bản",
+                width: 40,
                 dataIndex: "title",
-                render: (text, record) => <a href={record.link}>{text}</a>,
+                render: (text, record) => record.versionName,
             },
             {
-                title: "Mô tả",
-                dataIndex: "description",
-            },
-            {
-                title: "Ảnh đại diện",
+                title: "Cưỡng chế update",
                 dataIndex: "thumbnail",
-                render: (thumbnail, record) => (
-                    <img
-                        width="50"
-                        height="50"
-                        alt="Ảnh bìa"
-                        src={getCDN(thumbnail)}
-                    />
-                ),
-            },
-            {
-                title: "Ảnh bìa",
-                dataIndex: "cover",
-                render: (cover, record) => (
-                    <img
-                        width="50"
-                        height="50"
-                        alt="Ảnh bìa"
-                        src={getCDN(cover)}
-                    />
-                ),
-            },
-            {
-                title: "Ngày tạo",
-                dataIndex: "createdAt",
-                render: (time) => moment(time).format("DD/MM/YYYY HH:mm"),
-            },
-            {
-                title: "Ngày cập nhật",
-                dataIndex: "updatedAt",
-                render: (time) => moment(time).format("DD/MM/YYYY HH:mm"),
+                width: 80,
+                render: (text, record) => record.isUpdate ? 'Có' : '' 
             },
             {
                 title: "Hành động",
-                fixed: "right",
-                width: 100,
+                width: 80,
                 render: (text, record) => (
                     <>
                         <Ability roles={[PERMISSION_CODE.UPDATE]}>
-                            <Tooltip title="Sửa">
-                                <Button
-                                    type="link"
-                                    icon={<FiEdit3 />}
-                                    onClick={(e) => onEdit(e, record)}
-                                />
-                            </Tooltip>
+                            <Button
+                                type="link"
+                                icon={<FiEdit3 />}
+                                onClick={(e) => onEdit(e, record)}
+                            />
                         </Ability>
                         <Ability roles={[PERMISSION_CODE.DELETE]}>
                             <Popconfirm
-                                title="Xác nhận xoá thể loại này?"
+                                title="Xác nhận phiên bản này?"
                                 placement="topLeft"
                                 okText="Xoá"
                                 cancelText="Huỷ"
@@ -118,9 +82,7 @@ export default class ListSong extends Component {
                                 }
                                 onConfirm={(e) => onDelete(e, record)}
                             >
-                                <Tooltip title="Xoá">
-                                    <Button type="link" danger icon={<FiTrash />} />
-                                </Tooltip>
+                                <Button type="link" danger icon={<FiTrash />} />
                             </Popconfirm>
                         </Ability>
                     </>
@@ -130,6 +92,7 @@ export default class ListSong extends Component {
         return (
             <Table
                 size="small"
+                // scroll={{ x: "100vw" }}
                 rowSelection={{
                     type: "checkbox",
                     onSelect: onSelect,

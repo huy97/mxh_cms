@@ -13,7 +13,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function (config) {
     store.dispatch(showLoading());
-    config.headers.common['Authorization'] = localStorage.getItem('token');
+    config.headers.token = localStorage.getItem('token');
+    console.log(localStorage.getItem('token'));
     console.log("Request: ", config.url, config.method, config.params || [], config.data || []);
     return config;
 }, function (error) {

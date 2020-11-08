@@ -1,17 +1,17 @@
 import React from 'react';
-import {RiHome2Line, RiDiscLine, RiUserLine, RiArticleLine, RiUserStarLine, RiShieldUserLine} from 'react-icons/ri';
+import {RiHome2Line, RiListSettingsLine, RiUserLine, RiArticleLine, RiUserStarLine, RiShieldUserLine} from 'react-icons/ri';
 import {PERMISSION_CODE} from "constants/global";
 
 const Manager = React.lazy(() => import('containers/Manager'));
-const Song = React.lazy(() => import('containers/Manager/Song'));
-const Category = React.lazy(() => import('containers/Manager/Category'));
-const Artist = React.lazy(() => import('containers/Manager/Artist'));
+const Version = React.lazy(() => import('containers/Manager/Version'));
+const Category = React.lazy(() => import('containers/Manager/Post'));
+const EndUser = React.lazy(() => import('containers/Manager/EndUser'));
 const Role = React.lazy(() => import('containers/Manager/Role'));
 const User = React.lazy(() => import('containers/Manager/User'));
 
 const routes = [
     {
-        path: "/manager",
+        path: "/",
         title: "Trang chủ",
         isPrivate: true,
         icon: <RiHome2Line className="menu-icon"/>,
@@ -20,17 +20,17 @@ const routes = [
         component: Manager
     },
     {
-        path: "/manager/songs",
-        title: "Quản lý bài hát",
-        icon: <RiDiscLine className="menu-icon"/>,
+        path: "/manager/versions",
+        title: "Quản lý version",
+        icon: <RiListSettingsLine className="menu-icon"/>,
         isPrivate: true,
         roles: [PERMISSION_CODE.MANAGER],
         isAdmin: true,
-        component: Song
+        component: Version
     },
     {
-        path: "/manager/categories",
-        title: "Quản lý danh mục",
+        path: "/manager/posts",
+        title: "Quản lý bài viết",
         icon: <RiArticleLine className="menu-icon"/>,
         isPrivate: true,
         roles: [PERMISSION_CODE.MANAGER],
@@ -38,13 +38,13 @@ const routes = [
         component: Category
     },
     {
-        path: "/manager/artists",
-        title: "Quản lý nghệ sĩ",
+        path: "/manager/endusers",
+        title: "Quản lý người dùng cuối",
         icon: <RiUserStarLine className="menu-icon"/>,
         isPrivate: true,
         roles: [PERMISSION_CODE.MANAGER],
         isAdmin: true,
-        component: Artist
+        component: EndUser
     },
     {
         path: "/manager/role",

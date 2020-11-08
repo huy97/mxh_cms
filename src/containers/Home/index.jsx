@@ -422,7 +422,7 @@ export class Home extends Component {
             <React.Fragment>
                 <Helmet>
                     <meta charSet="utf-8"/>
-                    <title>mySong - Best music for everybody</title>
+                    <title>Mabo79 | Admin Cpanel</title>
                 </Helmet>
                 <div style={{
                         width: '100%'

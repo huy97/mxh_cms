@@ -49,6 +49,7 @@ export class Container extends Component {
             return <NotFound/>;
         }
         if (isAdmin) {
+            console.log('admin');
             return (
                 <div>
                     <Layout>

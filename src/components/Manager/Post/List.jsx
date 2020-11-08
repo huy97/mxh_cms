@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Button, Popconfirm, Tag, Tooltip } from "antd";
+import { Table, Button, Popconfirm, Tooltip } from "antd";
 import PropTypes from "prop-types";
 import { FiTrash, FiEdit3 } from "react-icons/fi";
 import { getCDN } from "utils";
@@ -7,8 +7,6 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import Ability from "containers/Ability";
 import { PERMISSION_CODE } from "constants/global";
-import { Link } from "react-router-dom";
-import { RiStarSLine } from "react-icons/ri";
 
 export default class ListSong extends Component {
     static propTypes = {
@@ -49,47 +47,23 @@ export default class ListSong extends Component {
                 fixed: "left",
             },
             {
-                title: "Tên nghệ sĩ",
-                dataIndex: "fullName",
-                render: (text, record) => (
-                    <Link to={record.link}>
-                        {text} {record.isComposer ? <RiStarSLine /> : null}
-                    </Link>
-                ),
+                title: "Người viết",
+                dataIndex: "user",
+                render: (user, record) => <a href={record.link}>{user.fullName}</a>,
             },
             {
-                title: "Chức danh",
-                dataIndex: "isComposer",
-                render: (value) =>
-                    value ? (
-                        <Tag color="green">Ca sĩ - Nhạc sĩ</Tag>
-                    ) : (
-                        <Tag color="green">Ca sĩ</Tag>
-                    ),
+                title: "Nội dung",
+                dataIndex: "content",
+                render: (content, record) => content,
             },
             {
-                title: "Ảnh đại diện",
-                dataIndex: "thumbnail",
-                render: (thumbnail, record) => (
-                    <img
-                        width="50"
-                        height="50"
-                        alt="Ảnh bìa"
-                        src={getCDN(thumbnail)}
-                    />
-                ),
+                title: "Lượt bình luận",
+                render: (record) => (record.comment + record.reply),
             },
             {
-                title: "Ảnh bìa",
-                dataIndex: "cover",
-                render: (cover, record) => (
-                    <img
-                        width="50"
-                        height="50"
-                        alt="Ảnh bìa"
-                        src={getCDN(cover)}
-                    />
-                ),
+                title: "Lượt thích",
+                dataIndex: "likeStats",
+                render: (likeStats, record) => (likeStats[0].total),
             },
             {
                 title: "Ngày tạo",

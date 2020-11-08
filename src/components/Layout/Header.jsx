@@ -49,7 +49,7 @@ export class Header extends Component {
             <div className={styles.container}>
                 <div className={styles.wrapper}>
                     <div className={styles.logo}>
-                        <span>mySong</span>
+                        <span>Mabo79</span>
                     </div>
                     <nav>
                         <div className={styles.searchBox}>

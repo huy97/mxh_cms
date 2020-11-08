@@ -90,13 +90,15 @@ export class Role extends Component {
     }
 
     handleCreateSuccess = (item) => {
-        let {data} = this.state;
+        let {data, pagination} = this.state;
         data.unshift({
             key: data.length,
             ...item
         });
+        pagination.total = pagination.total + 1;
         this.setState({
-            data: [...data]
+            data: [...data],
+            pagination: {...pagination}
         });
     }
 

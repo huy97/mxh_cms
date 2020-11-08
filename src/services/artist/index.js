@@ -1,23 +1,15 @@
 import services from "services";
-import { LIST_ARTIST_URL, CREATE_ARTIST_URL, UPDATE_DELETE_ARTIST_URL } from "constants/global";
+import { LIST_END_USER_URL,  TOOGLE_LOCK_USER_URL } from "constants/global";
 
-export const fetchListArtist = async (skip, limit) => {
-    return await services.get(LIST_ARTIST_URL, {
-        params: {
-            skip,
-            limit
-        }
-    });
+export const fetchListUser = async (keyword, skip, limit) => {
+    let link = `${LIST_END_USER_URL}?start=${skip}&limit=${limit}&keyword=${keyword}` 
+    return await services.get(link);
 };
 
-export const createArtist = async (data) => {
-    return await services.post(CREATE_ARTIST_URL, data);
-}
-
-export const updateArtist = async (artistId, data) => {
-    return await services.put(UPDATE_DELETE_ARTIST_URL.replace(':id', artistId), data);
-}
-
-export const deleteArtist = async (artistId) => {
-    return await services.delete(UPDATE_DELETE_ARTIST_URL.replace(':id', artistId));
+export const toogleLockUser = async (id, lockStatus) => {
+    let body = {
+        id: id,
+        setLock: lockStatus,
+    }
+    return await services.put(TOOGLE_LOCK_USER_URL, body);
 }

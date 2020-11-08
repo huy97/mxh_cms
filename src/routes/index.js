@@ -1,9 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import adminRoutes from 'routes/admin';
-import userRoutes from 'routes/user';
 
-const Home = React.lazy(() => import('containers/Home'));
 const Login = React.lazy(() => import('containers/Login'));
 const Container = React.lazy(() => import('containers'));
 const NotFound = React.lazy(() => import('containers/NotFound'));
@@ -11,13 +9,8 @@ const NotFound = React.lazy(() => import('containers/NotFound'));
 const RouterManager = (props) => {
     return (
         <Switch>
-            <Route exact path="/">
-                <Container>
-                    <Home/>
-                </Container>
-            </Route>
             {
-                [...adminRoutes, ...userRoutes].map(({component: Component, isPrivate, roles, path, isAdmin}, key) => {
+                [...adminRoutes].map(({component: Component, isPrivate, roles, path, isAdmin}, key) => {
                     return (
                         <Route key={key} exact path={path}>
                             <Container isPrivate={isPrivate} isAdmin={isAdmin} roles={roles}>

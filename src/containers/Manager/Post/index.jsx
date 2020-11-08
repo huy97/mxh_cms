@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchListCategory, deleteCategory} from 'services/category';
-import {Space, Card, Button, notification} from 'antd';
-import {FiPlus} from 'react-icons/fi';
+import {fetchListPost, deleteCategory} from 'services/category';
+import {Space, Card, notification} from 'antd';
 import {getSkip} from 'utils';
 
-const List = React.lazy(() => import ('components/Manager/Category/List'));
-const Create = React.lazy(() => import ('components/Manager/Category/Create'));
-const Edit = React.lazy(() => import ('components/Manager/Category/Edit'));
+const List = React.lazy(() => import ('components/Manager/Post/List'));
+const Create = React.lazy(() => import ('components/Manager/Post/Create'));
+const Edit = React.lazy(() => import ('components/Manager/Post/Edit'));
 
 export class Category extends Component {
     constructor(props) {
@@ -20,18 +19,19 @@ export class Category extends Component {
             pagination: {
                 skip: 0,
                 current: 1,
-                pageSize: 100,
+                pageSize: 20,
                 total: 0
             }
         }
     }
     componentDidMount() {
-        this.fetchListCategory();
+        this.fetchListPost();
     }
 
-    fetchListCategory = async () => {
+    fetchListPost = async () => {
         try {
-            const result = await fetchListCategory();
+            const {pagination} = this.state;
+            const result = await fetchListPost(pagination.skip, pagination.pageSize);
             let data = result.data.map((obj, index) => {
                 return {
                     key: index,
@@ -112,14 +112,8 @@ export class Category extends Component {
                     display: "flex"
                 }}>
                 <Card
-                    title="Danh sách thể loại"
-                    bordered={false}
-                    extra={<Button type = "primary" icon = {
-                        <FiPlus className="menu-icon"/>
-                    }
-                    onClick = {
-                        this.handleToggleCreate
-                    } > Thêm mới</Button>}>
+                    title="Danh sách bài viết"
+                    bordered={false}>
                     <List data={data} pagination={pagination} onPaginate={this.handlePaginate} onDelete={this.handleDelete} onEdit={this.handleToggleEdit} />
                     <Create visible={showCreate} onSuccess={this.handleCreateSuccess} onClose={this.handleToggleCreate} />
                     <Edit visible={showEdit} editData={editData} onSuccess={this.handleEditSuccess} onClose={this.handleToggleEdit}/>

@@ -1,13 +1,9 @@
 import services from "services";
-import { LIST_CATEGORY_URL, CREATE_CATEGORY_URL, UPDATE_DELETE_CATEGORY_URL } from "constants/global";
+import { LIST_POST_URL, CREATE_CATEGORY_URL, UPDATE_DELETE_CATEGORY_URL } from "constants/global";
 
-export const fetchListCategory = async (skip, limit) => {
-    return await services.get(LIST_CATEGORY_URL, {
-        params: {
-            skip,
-            limit
-        }
-    });
+export const fetchListPost = async (skip, limit) => {
+    let link = `${LIST_POST_URL}?start=${skip}&limit=${limit}`
+    return await services.get(link);
 };
 
 export const createCategory = async (data) => {
