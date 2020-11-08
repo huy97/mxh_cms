@@ -27,7 +27,7 @@ export const REPEAT_TYPE = {
     REPEAT_ALL: 2
 }
 
-export const API_URL = 'http://192.168.2.8:3000/';
+export const API_URL = 'https://api.mabo79.vn/';
 export const CDN_URL = 'http://localhost:8686/cdn/';
 export const LOGIN_URL = '/v2/admin/login';
 export const REGISTER_URL = '/user/register';
