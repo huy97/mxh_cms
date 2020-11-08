@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Table, Button, Popconfirm, Tooltip } from "antd";
 import PropTypes from "prop-types";
 import { FiTrash, FiEdit3 } from "react-icons/fi";
-import { getCDN } from "utils";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import Ability from "containers/Ability";
