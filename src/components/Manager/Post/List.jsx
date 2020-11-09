@@ -95,7 +95,7 @@ export default class ListSong extends Component {
                 fixed: "right",
                 width: 100,
                 render: (text, record) => {
-                    let isShow = record.isShow !== undefined ? record.isShow : true;
+                    let isShow = record.isShow !== undefined ? record.isShow : false;
                     let title = isShow ? 'Ẩn bài viết' : 'Hiện bài viết';
                     let titleConfirm = isShow ? 'Xác nhận ẩn bài viết này' : 'Xác nhận hiển thị bài viết này';
                     return (
