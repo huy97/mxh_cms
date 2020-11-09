@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Table, Button, Popconfirm, Tooltip } from "antd";
 import PropTypes from "prop-types";
-import { FiTrash, FiEdit3 } from "react-icons/fi";
+import { FiTrash } from "react-icons/fi";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import Ability from "containers/Ability";
@@ -36,7 +36,6 @@ export default class ListSong extends Component {
             onPaginate,
             pagination,
             onDelete,
-            onEdit,
         } = this.props;
         const columns = [
             {
@@ -57,12 +56,21 @@ export default class ListSong extends Component {
             },
             {
                 title: "Lượt bình luận",
-                render: (record) => (record.comment + record.reply),
+                render: (record) => {
+                    let binhLuan = 0;
+                    if(record.comment) {
+                        binhLuan = binhLuan + record.comment;
+                    }
+                    if(record.reply) {
+                        binhLuan = binhLuan +  record.reply;
+                    }
+                    return binhLuan;
+                }
             },
             {
                 title: "Lượt thích",
                 dataIndex: "likeStats",
-                render: (likeStats, record) => (likeStats[0].total),
+                render: (likeStats, record) => (likeStats[0].total ? likeStats[0].total : 0),
             },
             {
                 title: "Ngày tạo",
@@ -80,7 +88,7 @@ export default class ListSong extends Component {
                 width: 100,
                 render: (text, record) => (
                     <>
-                        <Ability roles={[PERMISSION_CODE.UPDATE]}>
+                        {/* <Ability roles={[PERMISSION_CODE.UPDATE]}>
                             <Tooltip title="Sửa">
                                 <Button
                                     type="link"
@@ -88,7 +96,7 @@ export default class ListSong extends Component {
                                     onClick={(e) => onEdit(e, record)}
                                 />
                             </Tooltip>
-                        </Ability>
+                        </Ability> */}
                         <Ability roles={[PERMISSION_CODE.DELETE]}>
                             <Popconfirm
                                 title="Xác nhận xoá thể loại này?"
