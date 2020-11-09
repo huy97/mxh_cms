@@ -70,7 +70,15 @@ export default class ListSong extends Component {
             {
                 title: "Lượt thích",
                 dataIndex: "likeStats",
-                render: (likeStats, record) => (likeStats[0].total ? likeStats[0].total : 0),
+                render: (likeStats, record) => {
+                    let total = 0;
+                    if(likeStats) {
+                        if(likeStats[0]) {
+                            total = likeStats[0].total;
+                        }
+                    }
+                    return total;
+                }
             },
             {
                 title: "Ngày tạo",
