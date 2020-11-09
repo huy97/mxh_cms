@@ -36,7 +36,8 @@ export class Category extends Component {
                     ...obj,
                 }
             })
-            this.setState({data})
+            pagination.total = result.total;
+            this.setState({data, pagination})
         } catch (e) {
             //
         }
@@ -47,7 +48,7 @@ export class Category extends Component {
         pagination.skip = getSkip(e, pagination.pageSize);
         pagination.current = e;
         this.setState({pagination});
-        this.fetchListCategory();
+        this.fetchListPost();
     }
 
     handleToggleCreate = () => {
