@@ -5,7 +5,7 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import Ability from "containers/Ability";
 import { PERMISSION_CODE } from "constants/global";
-import { AiFillUnlock, AiFillLock } from "react-icons/ai";
+import { BsFillUnlockFill, BsFillLockFill } from "react-icons/bs";
 
 export default class ListSong extends Component {
     static propTypes = {
@@ -45,7 +45,7 @@ export default class ListSong extends Component {
                 fixed: "left",
             },
             {
-                title: "Tên nghệ sĩ",
+                title: "Tên người dùng",
                 dataIndex: "fullName",
                 render: (text, record) => text,
             },
@@ -107,7 +107,7 @@ export default class ListSong extends Component {
                                     onConfirm={(e) => ocLock(e, record, !lock)}
                                 >
                                     <Tooltip title={lock ? "Mở khóa" : 'Khóa'}>
-                                        <Button type="link" danger icon={lock? <AiFillUnlock /> : <AiFillLock />} />
+                                        <Button type="link" danger icon={lock? <BsFillLockFill /> : <BsFillUnlockFill />} />
                                     </Tooltip>
                                 </Popconfirm>
                             </Ability>

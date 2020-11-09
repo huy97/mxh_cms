@@ -1,8 +1,8 @@
 import services from "services";
 import { LIST_END_USER_URL,  TOOGLE_LOCK_USER_URL } from "constants/global";
 
-export const fetchListUser = async (keyword, skip, limit) => {
-    let link = `${LIST_END_USER_URL}?start=${skip}&limit=${limit}&keyword=${keyword}` 
+export const fetchListUser = async (keyword, isLock, skip, limit) => {
+    let link = `${LIST_END_USER_URL}?start=${skip}&limit=${limit}&keyword=${keyword}&isLock=${isLock}` 
     return await services.get(link);
 };
 

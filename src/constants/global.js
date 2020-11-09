@@ -27,9 +27,10 @@ export const REPEAT_TYPE = {
     REPEAT_ALL: 2
 }
 
-export const API_URL = 'https://api.mabo79.vn/';
+export const API_URL = 'http://localhost:3000/';
 export const CDN_URL = 'http://localhost:8686/cdn/';
 export const LOGIN_URL = '/v2/admin/login';
+export const LOGOUT_URL = '/v2/admin/logout';
 export const REGISTER_URL = '/user/register';
 export const GET_USER_INFO_URL = 'v2/admin/get-user-info';
 export const CREATE_USER_URL = '/user/create-user';
@@ -52,5 +53,5 @@ export const CREATE_ARTIST_URL = "/artist/create";
 export const TOOGLE_LOCK_USER_URL = "/v2/admin/user/toogle-lock";
 export const LIST_POST_URL = "/v2/admin/post/get";
 export const CREATE_CATEGORY_URL = "/category/create";
-export const UPDATE_DELETE_CATEGORY_URL = "/category/:id";
+export const TOGGLE_POST_URL = "/v2/admin/post/toggle";
 export const UPLOAD_MEDIA = "/media/upload";

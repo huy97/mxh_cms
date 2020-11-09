@@ -4,14 +4,25 @@ import {Layout, Avatar, Row, Col, Menu, Dropdown, Space} from 'antd';
 import 'antd/dist/antd.min.css';
 import { getCDN } from 'utils';
 import { Helmet } from 'react-helmet';
+import {logout} from 'reducers/auth';
 
-export class Header extends Component {
+export class Header extends Component {handleClick
+
+    handleClick = (e) => {
+        switch(e.key) {
+            case "0":
+                this.props.dispatch(logout())
+                break;
+            default:
+                break;
+        }
+    }
 
     notification = () => {
         return (
-            <Menu style={{minWidth: 200, padding: 5}}>
+            <Menu onClick={this.handleClick} style={{minWidth: 200, padding: 5}}>
                 <Menu.Item key="0">
-                    <a href="http://www.alipay.com/">Đăng xuất</a>
+                    Đăng xuất
                 </Menu.Item>
             </Menu>
         )

@@ -4,6 +4,8 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const REGISTER_START = "REGISTER_START";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const RESTORE_TOKEN = "RESTORE_TOKEN";
+export const LOGOUT_START= "LOGOUT_START";
+export const LOGOUT_SUCCESS= "LOGOUT_SUCCESS";
 
 export const login = (username, password) => {
     return {
@@ -12,6 +14,12 @@ export const login = (username, password) => {
             username,
             password
         }
+    }
+}
+
+export const logout = () => {
+    return {
+        type: LOGOUT_START,
     }
 }
 
@@ -66,6 +74,13 @@ const authReducer = (state = inititalState, action) => {
         case RESTORE_TOKEN:
             return {
                 ...state
+            };
+        case LOGOUT_SUCCESS:
+            state.isLoggedIn = false;
+            state.isRestoreToken = false;
+            state.userInfo = null;
+            return {
+                ...state,
             };
         default:
             return state;

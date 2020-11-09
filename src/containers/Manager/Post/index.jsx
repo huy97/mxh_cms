@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchListPost, deleteCategory} from 'services/category';
+import {fetchListPost, togglePost} from 'services/category';
 import {Space, Card, notification} from 'antd';
 import {getSkip} from 'utils';
 
 const List = React.lazy(() => import ('components/Manager/Post/List'));
-const Create = React.lazy(() => import ('components/Manager/Post/Create'));
-const Edit = React.lazy(() => import ('components/Manager/Post/Edit'));
 
 export class Category extends Component {
     constructor(props) {
@@ -67,16 +65,19 @@ export class Category extends Component {
         this.setState({data: [...data]});
     }
 
-    handleDelete = async (e, item) => {
+    handleDelete = async (e, item, isShow) => {
         let {data} = this.state;
         try {
-            await deleteCategory(item._id);
+            let result = await togglePost(item._id, isShow);
             let index = data.findIndex((obj) => obj._id === item._id);
             if (index !== -1) {
-                data.splice(index, 1);
-                this.setState({
-                    data: [...data]
-                });
+                data[index] = {
+                    key: index,
+                    ...result.data
+                }
+                this.setState({data: [...data]});
+                let msg = isShow ? "Hiện thị bài viết thành công" : "Ẩn bài viết thành công";
+                notification.success({message: msg});
             }
         } catch (e) {
             notification.error({message: e.message});
@@ -103,7 +104,7 @@ export class Category extends Component {
     }
 
     render() {
-        const {data, pagination, showCreate, showEdit, editData} = this.state;
+        const {data, pagination} = this.state;
         return (
             <Space
                 direction={"vertical"}
@@ -115,8 +116,6 @@ export class Category extends Component {
                     title="Danh sách bài viết"
                     bordered={false}>
                     <List data={data} pagination={pagination} onPaginate={this.handlePaginate} onDelete={this.handleDelete} onEdit={this.handleToggleEdit} />
-                    <Create visible={showCreate} onSuccess={this.handleCreateSuccess} onClose={this.handleToggleCreate} />
-                    <Edit visible={showEdit} editData={editData} onSuccess={this.handleEditSuccess} onClose={this.handleToggleEdit}/>
                 </Card>
             </Space>
         )

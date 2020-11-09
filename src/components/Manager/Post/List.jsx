@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Table, Button, Popconfirm, Tooltip } from "antd";
 import PropTypes from "prop-types";
-import { FiTrash } from "react-icons/fi";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import Ability from "containers/Ability";
@@ -94,38 +94,34 @@ export default class ListSong extends Component {
                 title: "Hành động",
                 fixed: "right",
                 width: 100,
-                render: (text, record) => (
-                    <>
-                        {/* <Ability roles={[PERMISSION_CODE.UPDATE]}>
-                            <Tooltip title="Sửa">
-                                <Button
-                                    type="link"
-                                    icon={<FiEdit3 />}
-                                    onClick={(e) => onEdit(e, record)}
-                                />
-                            </Tooltip>
-                        </Ability> */}
-                        <Ability roles={[PERMISSION_CODE.DELETE]}>
-                            <Popconfirm
-                                title="Xác nhận xoá thể loại này?"
-                                placement="topLeft"
-                                okText="Xoá"
-                                cancelText="Huỷ"
-                                okType="danger"
-                                icon={
-                                    <QuestionCircleOutlined
-                                        style={{ color: "red" }}
-                                    />
-                                }
-                                onConfirm={(e) => onDelete(e, record)}
-                            >
-                                <Tooltip title="Xoá">
-                                    <Button type="link" danger icon={<FiTrash />} />
-                                </Tooltip>
-                            </Popconfirm>
-                        </Ability>
-                    </>
-                ),
+                render: (text, record) => {
+                    let isShow = record.isShow !== undefined ? record.isShow : true;
+                    let title = isShow ? 'Ẩn bài viết' : 'Hiện bài viết';
+                    let titleConfirm = isShow ? 'Xác nhận ẩn bài viết này' : 'Xác nhận hiển thị bài viết này';
+                    return (
+                        <>
+                            <Ability roles={[PERMISSION_CODE.UPDATE]}>
+                                <Popconfirm
+                                    title={titleConfirm}
+                                    placement="topLeft"
+                                    okText="Đồng ý"
+                                    cancelText="Huỷ"
+                                    okType="danger"
+                                    icon={
+                                        <QuestionCircleOutlined
+                                            style={{ color: "red" }}
+                                        />
+                                    }
+                                    onConfirm={(e) => onDelete(e, record, !isShow)}
+                                >
+                                    <Tooltip title={title}>
+                                        <Button type="link" danger icon={isShow? <BsFillEyeFill /> : <BsFillEyeSlashFill />} />
+                                    </Tooltip>
+                                </Popconfirm>
+                            </Ability>
+                        </>
+                    )
+                }
             },
         ];
         return (

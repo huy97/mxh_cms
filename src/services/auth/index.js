@@ -1,4 +1,4 @@
-import {LOGIN_URL, REGISTER_URL, GET_USER_INFO_URL, LIST_USER_URL, CREATE_USER_URL, UPDATE_DELETE_USER_URL, LIST_ROLES_USER_URL, LIST_PERMISSION_USER_URL, UPDATE_DELETE_ROLE_URL, CREATE_ROLE_URL, UPDATE_USERROLE_URL} from "constants/global";
+import {LOGIN_URL, REGISTER_URL, GET_USER_INFO_URL, LIST_USER_URL, CREATE_USER_URL, UPDATE_DELETE_USER_URL, LIST_ROLES_USER_URL, LIST_PERMISSION_USER_URL, UPDATE_DELETE_ROLE_URL, CREATE_ROLE_URL, UPDATE_USERROLE_URL, LOGOUT_URL} from "constants/global";
 import services from "services";
 
 export const login = async (username, password) => {
@@ -98,4 +98,8 @@ export const fetchListPermission = async (skip, limit) => {
             limit
         }
     })
+}
+
+export const logout = async () => {
+    return await services.post(LOGOUT_URL);
 }
