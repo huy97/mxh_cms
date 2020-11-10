@@ -112,6 +112,7 @@ export class Role extends Component {
                 this.setState({
                     data: [...data]
                 });
+                notification.success({message: 'Xóa quyền thành công'});
             }
         } catch (e) {
             notification.error({message: e.message});
@@ -152,7 +153,7 @@ export class Role extends Component {
                     title="Danh sách quyền"
                     bordered={false}
                     extra={<Ability roles = {
-                        [PERMISSION_CODE.CREATE]
+                        [PERMISSION_CODE.MANAGER]
                     } > <Button
                         type="primary"
                         icon={<FiPlus className = "menu-icon" />}

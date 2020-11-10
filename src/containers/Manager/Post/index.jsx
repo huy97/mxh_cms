@@ -22,6 +22,7 @@ export class Category extends Component {
             }
         }
     }
+
     componentDidMount() {
         this.fetchListPost();
     }

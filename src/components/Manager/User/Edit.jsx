@@ -4,17 +4,11 @@ import {
     Drawer,
     Form,
     Input,
-    Upload,
     Button,
     notification,
-    Checkbox,
-    DatePicker,
 } from "antd";
-import { FiUpload } from "react-icons/fi";
-import { uploadMedia } from "services/media";
-import locale from "antd/es/date-picker/locale/vi_VN";
 import { updateUser } from "services/auth";
-import { getCDN, prepareTime, initFields } from "utils";
+import { getCDN, initFields } from "utils";
 import moment from "moment";
 
 export default class Create extends Component {
@@ -39,34 +33,10 @@ export default class Create extends Component {
         };
     }
 
-    handleUpload = async ({ file, onSuccess, onError, onProgress }) => {
-        try {
-            const result = await uploadMedia(file, (e) => {
-                onProgress({
-                    percent: Math.ceil(e.loaded / e.total) * 100,
-                });
-            });
-            let frd = new FileReader();
-            frd.onload = ({ target }) => {
-                this.setState({
-                    avatarData: target.result,
-                    avatar: result.data.minimizePath,
-                });
-            };
-            frd.readAsDataURL(file);
-        } catch (e) {}
-    };
 
     handleSubmit = async ({ fullName, newPassword, isVip, vipExpiredTime }) => {
-        const { avatar } = this.state;
         const { onSuccess, editData } = this.props;
         try {
-            if (!avatar) {
-                notification.error({
-                    message: "Vui lòng tải lên ảnh đại diện!",
-                });
-                return;
-            }
             if (!fullName) {
                 this.form.submit();
                 return;
@@ -74,9 +44,6 @@ export default class Create extends Component {
             const result = await updateUser(
                 editData._id,
                 fullName,
-                avatar,
-                isVip,
-                vipExpiredTime && prepareTime(vipExpiredTime),
                 newPassword
             );
             notification.success({
@@ -151,7 +118,7 @@ export default class Create extends Component {
     };
 
     render() {
-        const { avatarData, fields } = this.state;
+        const { fields } = this.state;
         const { visible } = this.props;
         return (
             <div>
@@ -171,29 +138,6 @@ export default class Create extends Component {
                         onFinish={this.handleSubmit}
                         layout="vertical"
                     >
-                        <Form.Item label="Ảnh đại diện">
-                            <Upload
-                                name="avatar"
-                                accept="image/*"
-                                listType="picture-card"
-                                className="category-upload"
-                                showUploadList={false}
-                                customRequest={this.handleUpload}
-                            >
-                                {avatarData ? (
-                                    <img
-                                        src={avatarData}
-                                        alt="Ảnh đại diện"
-                                        style={{
-                                            width: 150,
-                                            height: 150,
-                                        }}
-                                    />
-                                ) : (
-                                    <FiUpload style={{ fontSize: 24 }} />
-                                )}
-                            </Upload>
-                        </Form.Item>
                         <Form.Item
                             name="fullName"
                             label="Tên hiển thị"
@@ -224,20 +168,7 @@ export default class Create extends Component {
                                 placeholder="Nhập mật khẩu mới"
                             />
                         </Form.Item>
-                        <Form.Item name="isVip" valuePropName="checked">
-                            <Checkbox>VIP</Checkbox>
-                        </Form.Item>
-                        <Form.Item
-                            name="vipExpiredTime"
-                            label="Ngày hết hạn VIP"
-                        >
-                            <DatePicker
-                                locale={locale}
-                                placeholder="Chọn ngày"
-                                format="DD/MM/YYYY"
-                                style={{ display: "block" }}
-                            />
-                        </Form.Item>
+                        
                     </Form>
                 </Drawer>
             </div>

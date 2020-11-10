@@ -64,38 +64,41 @@ export default class ListSong extends Component {
                 title: "Hành động",
                 fixed: "right",
                 width: 100,
-                render: (text, record) => (
-                    <>
-                        <Ability roles={[PERMISSION_CODE.UPDATE]}>
-                            <Tooltip title="Sửa">
-                                <Button
-                                    type="link"
-                                    icon={<FiEdit3 />}
-                                    onClick={(e) => onEdit(e, record)}
-                                />
-                            </Tooltip>
-                        </Ability>
-                        <Ability roles={[PERMISSION_CODE.DELETE]}>
-                            <Popconfirm
-                                title="Xác nhận xoá thể loại này?"
-                                placement="topLeft"
-                                okText="Xoá"
-                                cancelText="Huỷ"
-                                okType="danger"
-                                icon={
-                                    <QuestionCircleOutlined
-                                        style={{ color: "red" }}
+                render: (text, record) => {
+                    let isShow = record.roleId > 6;
+                    return !isShow ? null : (
+                        <>
+                            <Ability roles={[PERMISSION_CODE.MANAGER]}>
+                                <Tooltip title="Sửa">
+                                    <Button
+                                        type="link"
+                                        icon={<FiEdit3 />}
+                                        onClick={(e) => onEdit(e, record)}
                                     />
-                                }
-                                onConfirm={(e) => onDelete(e, record)}
-                            >
-                                <Tooltip title="Xoá">
-                                    <Button type="link" danger icon={<FiTrash />} />
                                 </Tooltip>
-                            </Popconfirm>
-                        </Ability>
-                    </>
-                ),
+                            </Ability>
+                            <Ability roles={[PERMISSION_CODE.MANAGER]}>
+                                <Popconfirm
+                                    title="Xác nhận xoá quyền này?"
+                                    placement="topLeft"
+                                    okText="Xoá"
+                                    cancelText="Huỷ"
+                                    okType="danger"
+                                    icon={
+                                        <QuestionCircleOutlined
+                                            style={{ color: "red" }}
+                                        />
+                                    }
+                                    onConfirm={(e) => onDelete(e, record)}
+                                >
+                                    <Tooltip title="Xoá">
+                                        <Button type="link" danger icon={<FiTrash />} />
+                                    </Tooltip>
+                                </Popconfirm>
+                            </Ability>
+                        </>
+                    );
+                },
             },
         ];
         return (

@@ -6,7 +6,6 @@ import {
     Card,
     Button,
     notification,
-    Select,
     Input
 } from 'antd';
 import {FiPlus} from 'react-icons/fi';
@@ -46,11 +45,10 @@ export class User extends Component {
     }
 
     fetchListUser = async () => {
-        const {keyword, isVip, pagination} = this.state;
+        const {keyword, pagination} = this.state;
         try {
             const result = await fetchListUser(
                 keyword,
-                isVip,
                 pagination.skip,
                 pagination.pageSize
             );
@@ -119,6 +117,7 @@ export class User extends Component {
                 this.setState({
                     data: [...data]
                 });
+                notification.success({message: 'Xóa tài khoản thành công'});
             }
         } catch (e) {
             notification.error({message: e.message});
@@ -181,7 +180,7 @@ export class User extends Component {
                     width: "100%",
                     display: "flex"
                 }}>
-                <Card title="Danh sách thể loại" bordered={false}>
+                <Card title="Danh sách tài khoản hệ thống" bordered={false}>
                     <Form
                         initialValues={{
                             isVip: "",
@@ -189,7 +188,7 @@ export class User extends Component {
                         }}
                         onFinish={this.handleSearch}
                         layout="inline">
-                        <Form.Item name="isVip" label="Loại tài khoản">
+                        {/* <Form.Item name="isVip" label="Loại tài khoản">
                             <Select
                                 style={{
                                     width: 100
@@ -198,7 +197,7 @@ export class User extends Component {
                                 <Select.Option value="0">Thường</Select.Option>
                                 <Select.Option value="1">VIP</Select.Option>
                             </Select>
-                        </Form.Item>
+                        </Form.Item> */}
                         <Form.Item name="keyword" label="Từ khoá">
                             <Input placeholder="Nhập tên đăng nhập, tên hiển thị"/>
                         </Form.Item>
@@ -208,10 +207,10 @@ export class User extends Component {
                     </Form>
                 </Card>
                 <Card
-                    title="Danh sách thể loại"
+                    title="Danh sách tài khoản hệ thống"
                     bordered={false}
                     extra={<Ability roles = {
-                        [PERMISSION_CODE.CREATE]
+                        [PERMISSION_CODE.MANAGER]
                     } > <Button
                         type="primary"
                         icon={<FiPlus className = "menu-icon" />}
@@ -228,7 +227,8 @@ export class User extends Component {
                     <Create
                         visible={showCreate}
                         onSuccess={this.handleCreateSuccess}
-                        onClose={this.handleToggleCreate}/>
+                        onClose={this.handleToggleCreate}
+                    />
                     <Edit
                         visible={showEdit}
                         editData={editData}

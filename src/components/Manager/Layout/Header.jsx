@@ -2,25 +2,41 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Layout, Avatar, Row, Col, Menu, Dropdown, Space} from 'antd';
 import 'antd/dist/antd.min.css';
-import { getCDN } from 'utils';
 import { Helmet } from 'react-helmet';
 import {logout} from 'reducers/auth';
+import ChangePassword from './ChangePassword';
 
-export class Header extends Component {handleClick
+export class Header extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            visiblePassword: false,
+        }
+    }
 
     handleClick = (e) => {
         switch(e.key) {
             case "0":
                 this.props.dispatch(logout())
                 break;
+            case "1":
+                this.setState({visiblePassword: true});
+                break;
             default:
                 break;
         }
     }
 
+    toggleChangePassword = () => {
+        this.setState({visiblePassword: false});
+    }
+
     notification = () => {
         return (
             <Menu onClick={this.handleClick} style={{minWidth: 200, padding: 5}}>
+                <Menu.Item key="1">
+                    Đổi mật khẩu
+                </Menu.Item>
                 <Menu.Item key="0">
                     Đăng xuất
                 </Menu.Item>
@@ -29,9 +45,6 @@ export class Header extends Component {handleClick
     }
 
     render() {
-        const {auth: {
-                userInfo
-            }} = this.props;
         return (
             <React.Fragment>
                 <Helmet>
@@ -61,12 +74,16 @@ export class Header extends Component {handleClick
                                     style={{
                                         color: '#f56a00',
                                         backgroundColor: '#fde3cf'
-                                    }} src={getCDN(userInfo.info.avatar)}/>
+                                    }} src={require('../../../assets/avatar_default.png')}/>
                             </Dropdown>
                         </Space>
                     </Col>
                 </Row>
                 </Layout.Header>
+                <ChangePassword 
+                    visible={this.state.visiblePassword}
+                    onClose={this.toggleChangePassword}
+                />
             </React.Fragment>
         )
     }

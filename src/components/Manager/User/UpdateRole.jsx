@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Modal from 'antd/lib/modal/Modal'
-import { Button, Checkbox, notification } from 'antd';
+import { Button, Radio, notification } from 'antd';
 import PropTypes from 'prop-types';
 import { updateUserRole } from 'services/auth';
 
@@ -24,7 +24,7 @@ export default class UpdateRole extends Component {
     }
 
     handleChange = (e) => {
-        this.setState({checked: e});
+        this.setState({checked: e.target.value});
     }
 
     handleOk = async () => {
@@ -50,10 +50,8 @@ export default class UpdateRole extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(snapshot){
             const {editData} = this.props;
-            if(Array.isArray(editData.roles)){
-                let checked = editData.roles.map((obj) => obj.roleId);
-                this.setState({checked});
-            }
+            this.setState({checked: editData.roles[0].roleId});
+
         }
     }
     
@@ -80,7 +78,7 @@ export default class UpdateRole extends Component {
                     </Button>,
                 ]}
             >
-                <Checkbox.Group options={listRoles} value={checked} onChange={this.handleChange}/>
+                <Radio.Group options={listRoles} value={checked} onChange={this.handleChange}/>
             </Modal>
         )
     }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Table, Button, Popconfirm, Tag, Tooltip } from "antd";
 import PropTypes from "prop-types";
 import { FiTrash, FiEdit3, FiShield } from "react-icons/fi";
-import { getCDN, getRandomColor } from "utils";
+import { getRandomColor } from "utils";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import Ability from "containers/Ability";
@@ -59,41 +59,9 @@ export default class ListSong extends Component {
                 render: (roles, record) => roles.map((obj, key) => <Tag key={key} color={getRandomColor()}>{obj.description} </Tag>),
             },
             {
-                title: "Ảnh đại diện",
-                dataIndex: "avatar",
-                render: (thumbnail, record) => (
-                    <img
-                        width="50"
-                        height="50"
-                        alt="Ảnh đại diện"
-                        src={getCDN(thumbnail)}
-                    />
-                ),
-            },
-            {
                 title: "Ngày tạo",
                 dataIndex: "createdAt",
                 render: (time) => moment(time).format("DD/MM/YYYY HH:mm"),
-            },
-            {
-                title: "Loại tài khoản",
-                dataIndex: "isVip",
-                render: (value, record) =>
-                    value ? (
-                        <Tag color="red" key={1}>
-                            <b>VIP</b>
-                        </Tag>
-                    ) : (
-                        <Tag key={1}>Thường</Tag>
-                    ),
-            },
-            {
-                title: "Ngày hết hạn VIP",
-                dataIndex: "vipExpiredTime",
-                render: (time, record) =>
-                    record.isVip && time
-                        ? moment(time).format("DD/MM/YYYY HH:mm")
-                        : "",
             },
             {
                 title: "Hành động",
@@ -101,43 +69,48 @@ export default class ListSong extends Component {
                 width: 150,
                 render: (text, record) => (
                     <>
-                        <Ability roles={[PERMISSION_CODE.MANAGER, PERMISSION_CODE.READ, PERMISSION_CODE.CREATE, PERMISSION_CODE.UPDATE, PERMISSION_CODE.DELETE]}>
-                            <Tooltip title="Phân quyền">
-                                <Button
-                                    type="link"
-                                    icon={<FiShield />}
-                                    onClick={(e) => onUpdateRole(e, record)}
-                                />
-                            </Tooltip>
-                        </Ability>
-                        <Ability roles={[PERMISSION_CODE.UPDATE]}>
-                            <Tooltip title="Sửa">
-                                <Button
-                                    type="link"
-                                    icon={<FiEdit3 />}
-                                    onClick={(e) => onEdit(e, record)}
-                                />
-                            </Tooltip>
-                        </Ability>
-                        <Ability roles={[PERMISSION_CODE.DELETE]}>
-                            <Popconfirm
-                                title="Xác nhận xoá thể loại này?"
-                                placement="topLeft"
-                                okText="Xoá"
-                                cancelText="Huỷ"
-                                okType="danger"
-                                icon={
-                                    <QuestionCircleOutlined
-                                        style={{ color: "red" }}
-                                    />
-                                }
-                                onConfirm={(e) => onDelete(e, record)}
-                            >
-                                <Tooltip title="Xoá">
-                                    <Button type="link" danger icon={<FiTrash />} />
-                                </Tooltip>
-                            </Popconfirm>
-                        </Ability>
+                        
+                        {record.username !== 'root' ? (
+                            <React.Fragment>
+                                <Ability roles={[PERMISSION_CODE.MANAGER]}>
+                                    <Tooltip title="Phân quyền">
+                                        <Button
+                                            type="link"
+                                            icon={<FiShield />}
+                                            onClick={(e) => onUpdateRole(e, record)}
+                                        />
+                                    </Tooltip>
+                                </Ability>
+                                <Ability roles={[PERMISSION_CODE.MANAGER]}>
+                                    <Tooltip title="Sửa">
+                                        <Button
+                                            type="link"
+                                            icon={<FiEdit3 />}
+                                            onClick={(e) => onEdit(e, record)}
+                                        />
+                                    </Tooltip>
+                                </Ability>
+                                <Ability roles={[PERMISSION_CODE.MANAGER]}>
+                                    <Popconfirm
+                                        title="Xác nhận xoá tài khoản này?"
+                                        placement="topLeft"
+                                        okText="Xoá"
+                                        cancelText="Huỷ"
+                                        okType="danger"
+                                        icon={
+                                            <QuestionCircleOutlined
+                                                style={{ color: "red" }}
+                                            />
+                                        }
+                                        onConfirm={(e) => onDelete(e, record)}
+                                    >
+                                        <Tooltip title="Xoá">
+                                            <Button type="link" danger icon={<FiTrash />} />
+                                        </Tooltip>
+                                    </Popconfirm>
+                                </Ability>
+                            </React.Fragment>
+                        ) : null }
                     </>
                 ),
             },

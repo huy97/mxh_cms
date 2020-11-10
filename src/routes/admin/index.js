@@ -15,7 +15,7 @@ const routes = [
         title: "Trang chủ",
         isPrivate: true,
         icon: <RiHome2Line className="menu-icon"/>,
-        roles: [PERMISSION_CODE.MANAGER],
+        roles: [PERMISSION_CODE.MANAGER, PERMISSION_CODE.READ],
         isAdmin: true,
         component: Manager
     },
@@ -24,7 +24,7 @@ const routes = [
         title: "Quản lý version",
         icon: <RiListSettingsLine className="menu-icon"/>,
         isPrivate: true,
-        roles: [PERMISSION_CODE.MANAGER],
+        roles: [PERMISSION_CODE.MANAGER, PERMISSION_CODE.READ],
         isAdmin: true,
         component: Version
     },
@@ -33,7 +33,7 @@ const routes = [
         title: "Quản lý bài viết",
         icon: <RiArticleLine className="menu-icon"/>,
         isPrivate: true,
-        roles: [PERMISSION_CODE.MANAGER],
+        roles: [PERMISSION_CODE.MANAGER, PERMISSION_CODE.READ],
         isAdmin: true,
         component: Category
     },
@@ -42,7 +42,7 @@ const routes = [
         title: "Quản lý người dùng cuối",
         icon: <RiUserStarLine className="menu-icon"/>,
         isPrivate: true,
-        roles: [PERMISSION_CODE.MANAGER],
+        roles: [PERMISSION_CODE.MANAGER, PERMISSION_CODE.READ],
         isAdmin: true,
         component: EndUser
     },
@@ -51,16 +51,16 @@ const routes = [
         title: "Quản lý phân quyền",
         icon: <RiShieldUserLine className="menu-icon"/>,
         isPrivate: true,
-        roles: [PERMISSION_CODE.MANAGER],
+        roles: [PERMISSION_CODE.MANAGER, PERMISSION_CODE.READ],
         isAdmin: true,
         component: Role
     },
     {
         path: "/manager/user",
-        title: "Quản lý người dùng",
+        title: "Quản lý người dùng hệ thống",
         icon: <RiUserLine className="menu-icon"/>,
         isPrivate: true,
-        roles: [PERMISSION_CODE.MANAGER],
+        roles: [PERMISSION_CODE.MANAGER, PERMISSION_CODE.READ],
         isAdmin: true,
         component: User
     }

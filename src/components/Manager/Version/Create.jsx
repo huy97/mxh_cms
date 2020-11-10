@@ -10,8 +10,6 @@ import {
   Checkbox,
 } from "antd";
 import styles from "./index.module.scss";
-import { MEDIA_TYPE } from "constants/global";
-import { uploadMedia } from "services/media";
 import { createVersion } from "services/version";
 
 export default class Create extends Component {
@@ -33,63 +31,8 @@ export default class Create extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      thumbnail: "",
-      thumbnailMedium: "",
-      thumbnailData: "",
-      isUploadThumbnail: false,
-      fileList: [],
-      medias: [],
-    };
+    this.state = {}
   }
-
-  handleUploadFile = async (
-    { file, onSuccess, onError, onProgress },
-    isThumbnail = false
-  ) => {
-    try {
-      let { medias, fileList } = this.state;
-      if (isThumbnail) {
-        medias = medias.filter(
-          (obj) => obj.media.mediaType !== MEDIA_TYPE.IMAGE
-        );
-        this.setState({ isUploadThumbnail: true, medias, thumbnailData: "" });
-      }
-      const result = await uploadMedia(file, (e) => {
-        onProgress({
-          percent: Math.ceil(e.loaded / e.total) * 100,
-        });
-      });
-      if (result.data.mediaType === MEDIA_TYPE.IMAGE) {
-        if (isThumbnail) {
-          let frd = new FileReader();
-          frd.onload = ({ target }) => {
-            this.setState({
-              thumbnailData: target.result,
-              thumbnailMedium: result.data.filePath,
-              thumbnail: result.data.minimizePath,
-            });
-          };
-          frd.readAsDataURL(file);
-        }
-      } else {
-        fileList.push(file);
-      }
-      medias.push({ uid: file.uid, media: result.data, fileList });
-      this.setState(
-        {
-          medias,
-          isUploadThumbnail: false,
-        },
-        () => onSuccess()
-      );
-    } catch (e) {
-      if (isThumbnail) {
-        this.setState({ isUploadThumbnail: false });
-      }
-      onError(e);
-    }
-  };
 
   handleRemoveFile = (file) => {
     let { medias, fileList } = this.state;
